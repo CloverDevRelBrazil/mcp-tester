@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP DevRel Clover - Testador Interativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #228800 0%, #1a6600 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            right: -200px;
+            top: 0;
+            width: 800px;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100%" viewBox="0 0 680 1200" role="img" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="warmGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23D4764B;stop-opacity:0.06" /><stop offset="50%" style="stop-color:%23F4A460;stop-opacity:0.04" /><stop offset="100%" style="stop-color:%23228800;stop-opacity:0.05" /></linearGradient></defs><rect width="680" height="1200" fill="url(%23warmGrad)"/><g opacity="0.08"><rect x="0" y="0" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="85" y="0" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="170" y="0" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="255" y="0" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="340" y="0" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="425" y="0" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="510" y="0" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="595" y="0" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="0" y="100" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="85" y="100" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="170" y="100" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="255" y="100" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="340" y="100" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="425" y="100" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="510" y="100" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/><rect x="595" y="100" width="85" height="100" fill="none" stroke="%23B85C3C" stroke-width="0.5"/></g><path d="M 50 200 Q 100 220 150 200 T 250 210" stroke="%23D4764B" stroke-width="3" fill="none" opacity="0.12"/><path d="M 350 300 Q 400 330 450 310 T 550 320" stroke="%23F4A460" stroke-width="2.5" fill="none" opacity="0.1"/><path d="M 100 500 Q 200 550 300 530 T 450 520" stroke="%23B85C3C" stroke-width="2" fill="none" opacity="0.08"/><path d="M 500 700 Q 550 730 600 710 T 680 700" stroke="%23D4764B" stroke-width="2.5" fill="none" opacity="0.09"/><rect x="80" y="350" width="120" height="100" fill="%23D4764B" opacity="0.06" rx="4"/><rect x="480" y="450" width="140" height="110" fill="%23F4A460" opacity="0.05" rx="4"/><rect x="150" y="750" width="130" height="120" fill="%23B85C3C" opacity="0.07" rx="4"/><circle cx="680" cy="300" r="320" fill="%23D4764B" opacity="0.04"/><circle cx="0" cy="900" r="280" fill="%23F4A460" opacity="0.03"/><circle cx="340" cy="600" r="200" fill="%23228800" opacity="0.04"/><g opacity="0.14"><ellipse cx="50" cy="200" rx="8" ry="20" fill="%23228800" transform="rotate(-30 50 200)"/><ellipse cx="65" cy="190" rx="8" ry="22" fill="%23228800" transform="rotate(-10 65 190)"/><ellipse cx="80" cy="200" rx="8" ry="20" fill="%23228800" transform="rotate(15 80 200)"/></g><g opacity="0.12"><ellipse cx="600" cy="150" rx="9" ry="24" fill="%23228800" transform="rotate(20 600 150)"/><ellipse cx="620" cy="140" rx="9" ry="26" fill="%23228800" transform="rotate(40 620 140)"/><ellipse cx="635" cy="160" rx="9" ry="22" fill="%23228800" transform="rotate(60 635 160)"/></g><g opacity="0.13"><ellipse cx="80" cy="950" rx="8" ry="21" fill="%23228800" transform="rotate(-25 80 950)"/><ellipse cx="100" cy="940" rx="8" ry="23" fill="%23228800" transform="rotate(5 100 940)"/><ellipse cx="120" cy="955" rx="8" ry="20" fill="%23228800" transform="rotate(25 120 955)"/></g><path d="M 0 400 Q 170 420 340 400 T 680 410" stroke="%23D4764B" stroke-width="1" fill="none" opacity="0.07"/><path d="M 0 850 Q 170 880 340 860 T 680 875" stroke="%23228800" stroke-width="1" fill="none" opacity="0.07"/><g opacity="0.1"><path d="M 250 550 L 280 560 L 270 545 Z" fill="%23D4764B"/><path d="M 420 680 L 450 690 L 440 670 Z" fill="%23F4A460"/><path d="M 150 850 L 175 860 L 165 840 Z" fill="%23B85C3C"/><path d="M 550 300 L 575 310 L 565 290 Z" fill="%23228800"/></g><g opacity="0.08"><circle cx="120" cy="280" r="3" fill="%23D4764B"/><circle cx="200" cy="320" r="2.5" fill="%23F4A460"/><circle cx="450" cy="200" r="3.5" fill="%23B85C3C"/><circle cx="600" cy="450" r="2" fill="%23228800"/><circle cx="300" cy="600" r="3" fill="%23D4764B"/><circle cx="100" cy="800" r="2.5" fill="%23F4A460"/><circle cx="550" cy="950" r="3" fill="%23B85C3C"/><circle cx="200" cy="1050" r="3.5" fill="%23228800"/></g><g opacity="0.09"><rect x="350" y="150" width="16" height="20" fill="%23D4764B" transform="rotate(35 358 160)"/><rect x="520" y="600" width="14" height="18" fill="%23F4A460" transform="rotate(-25 527 609)"/><rect x="200" y="450" width="15" height="19" fill="%23B85C3C" transform="rotate(50 207 459)"/></g><g opacity="0.07"><circle cx="100" cy="1100" r="5" fill="%23D4764B"/><circle cx="140" cy="1120" r="4" fill="%23F4A460"/><circle cx="180" cy="1140" r="3" fill="%23B85C3C"/><circle cx="500" cy="250" r="6" fill="%23228800"/><circle cx="540" cy="280" r="4.5" fill="%23D4764B"/><circle cx="580" cy="300" r="5" fill="%23F4A460"/></g><line x1="170" y1="0" x2="170" y2="1200" stroke="%23B85C3C" stroke-width="0.5" opacity="0.05"/><line x1="510" y1="0" x2="510" y2="1200" stroke="%23D4764B" stroke-width="0.5" opacity="0.05"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.6;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .header h1 {
+            color: #228800;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 12px 28px;
+            background: #f5f5f5;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .tab-btn.active {
+            background: #228800;
+            color: white;
+            border-color: #1a6600;
+            box-shadow: 0 4px 12px rgba(34, 136, 0, 0.25);
+        }
+
+        .tab-btn:hover {
+            border-color: #228800;
+            box-shadow: 0 2px 8px rgba(34, 136, 0, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .tab-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            display: none;
+            border: 1px solid #f0f0f0;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 35px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95em;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #228800;
+        }
+
+        .tab-content h2 {
+            color: #228800;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .tab-content > p {
+            margin-bottom: 30px !important;
+        }
+
+        .btn-test {
+            background: #228800;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05em;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(34, 136, 0, 0.2);
+        }
+
+        .btn-test:hover {
+            background: #1a6600;
+            box-shadow: 0 6px 20px rgba(34, 136, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-test:active {
+            transform: scale(0.98);
+        }
+
+        .result {
+            margin-top: 40px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 5px solid #228800;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .result h3 {
+            color: #228800;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .result-content {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .loading {
+            text-align: center;
+            color: #228800;
+            font-weight: 600;
+            padding: 20px;
+        }
+
+        .error {
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #dc2626;
+        }
+
+        .success {
+            color: #16a34a;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            font-size: 0.9em;
+            padding: 20px 0;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 35px;
+        }
+
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 1.6em;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Integração DevRel Clover</h1>
+            <p>Testador Interativo de Ferramentas</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('codigo')">Gerar Código</button>
+            <button class="tab-btn" onclick="switchTab('docs')">Documentação</button>
+            <button class="tab-btn" onclick="switchTab('validar')">Validar App</button>
+            <button class="tab-btn" onclick="switchTab('validador-apk')">Validador de APK</button>
+            <button class="tab-btn" onclick="switchTab('apis')">APIs</button>
+        </div>
+
+        <!-- TAB 1: GERAR CÓDIGO -->
+        <div id="codigo" class="tab-content active">
+            <h2>Gerar Código para Integração</h2>
+            <p style="color: #666; margin-bottom: 20px;">Selecione a linguagem e tipo de pagamento para gerar código pronto para copiar!</p>
+            
+            <div class="two-columns">
+                <div class="form-group">
+                    <label>Linguagem</label>
+                    <select id="codigo-linguagem">
+                        <option value="kotlin">Android/Kotlin</option>
+                        <option value="flutter">Flutter</option>
+                        <option value="react-native">React Native</option>
+                        <option value="swift">iOS/Swift</option>
+                        <option value="typescript">TypeScript/Node.js</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de Pagamento</label>
+                    <select id="codigo-tipo">
+                        <option value="debito">Débito</option>
+                        <option value="credito">Crédito</option>
+                        <option value="pix">PIX</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-test" onclick="testarCodigo()">Gerar Código</button>
+            <div id="codigo-result"></div>
+        </div>
+
+        <!-- TAB 2: DOCUMENTAÇÃO -->
+        <div id="docs" class="tab-content">
+            <h2>Consultar Documentação</h2>
+            <p style="color: #666; margin-bottom: 20px;">Escolha um tópico para ver a documentação específica!</p>
+            
+            <div class="form-group">
+                <label>Tópico</label>
+                <select id="docs-topico">
+                    <option value="impressoras">Impressoras</option>
+                    <option value="sdk">SDK Setup</option>
+                    <option value="certificados">Certificados & Assinatura</option>
+                    <option value="pagamento">Integração de Pagamento</option>
+                    <option value="debug">Troubleshooting & Debug</option>
+                </select>
+            </div>
+
+            <button class="btn-test" onclick="testarDocs()">Consultar Documentação</button>
+            <div id="docs-result"></div>
+        </div>
+
+        <!-- TAB 3: VALIDAR APP -->
+        <div id="validar" class="tab-content">
+            <h2>Validar Requisitos do App</h2>
+            <p style="color: #666; margin-bottom: 20px;">Verifique se seu app atende os requisitos da Clover!</p>
+            
+            <div class="form-group">
+                <label>Nome do App</label>
+                <input type="text" id="validar-nome" placeholder="Ex: MyPaymentApp" value="MyPaymentApp">
+            </div>
+
+            <div class="form-group">
+                <label>Linguagem</label>
+                <select id="validar-linguagem">
+                    <option value="kotlin">Android/Kotlin</option>
+                    <option value="flutter">Flutter</option>
+                    <option value="react-native">React Native</option>
+                    <option value="swift">iOS/Swift</option>
+                    <option value="typescript">TypeScript/Node.js</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Recursos (separados por vírgula)</label>
+                <input type="text" id="validar-recursos" placeholder="Ex: pagamento, impressora" value="pagamento">
+                <div class="form-description">Exemplos: pagamento, impressora, nfc</div>
+            </div>
+
+            <button class="btn-test" onclick="testarValidar()">Validar Requisitos</button>
+            <div id="validar-result"></div>
+        </div>
+
+        <!-- TAB 4: TROUBLESHOOTING -->
+        <div id="troubleshooting" class="tab-content">
+            <h2>Troubleshooting & Ajuda</h2>
+            <p style="color: #666; margin-bottom: 20px;">Descreva o problema e receba soluções!</p>
+            
+            <div class="form-group">
+                <label>Descrição do Problema</label>
+                <input type="text" id="ts-problema" placeholder="Ex: terminal não reconhecido" value="terminal não reconhecido">
+            </div>
+
+            <div class="form-group">
+                <label>Linguagem (opcional)</label>
+                <input type="text" id="ts-linguagem" placeholder="Ex: kotlin">
+            </div>
+
+            <div class="form-group">
+                <label>Mensagem de Erro (opcional)</label>
+                <input type="text" id="ts-erro" placeholder="Cole a mensagem de erro aqui">
+            </div>
+
+            <button class="btn-test" onclick="testarTroubleshooting()">Procurar Solução</button>
+            <div id="ts-result"></div>
+        </div>
+
+        <!-- TAB 5: VALIDADOR DE APK -->
+        <div id="validador-apk" class="tab-content">
+            <h2>Validador de APK & AndroidManifest</h2>
+            <p style="color: #666; margin-bottom: 20px;">Faça upload do seu AndroidManifest.xml ou extraia da APK para validar os parâmetros obrigatórios.</p>
+            
+            <div class="form-group">
+                <label>Upload do AndroidManifest.xml</label>
+                <input type="file" id="manifest-file" accept=".xml" style="padding: 15px; cursor: pointer;">
+                <div class="form-description">Ou cole o conteúdo XML abaixo</div>
+            </div>
+
+            <div class="form-group">
+                <label>Conteúdo do AndroidManifest.xml (opcional)</label>
+                <textarea id="manifest-content" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.85em; min-height: 200px;" placeholder="Cole aqui o conteúdo do AndroidManifest.xml..."></textarea>
+            </div>
+
+            <button class="btn-test" onclick="validarManifest()">Validar AndroidManifest</button>
+            <div id="validador-apk-result"></div>
+
+            <!-- Guia de Parâmetros -->
+            <div style="margin-top: 40px; background: #f0f8f0; padding: 20px; border-radius: 12px; border-left: 4px solid #228800;">
+                <h3 style="color: #228800; margin-bottom: 20px;">Guia Prático - Parâmetros Obrigatórios</h3>
+                
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #333; margin-bottom: 10px;">1. android:extractNativeLibs="true"</h4>
+                    <p style="color: #666; font-size: 0.95em;">
+                        <strong>Localização:</strong> &lt;application&gt; tag<br>
+                        <strong>Propósito:</strong> Extrai bibliotecas nativas (.so) durante instalação<br>
+                        <strong>Importância:</strong> Crítico para apps com Android NDK/C++<br>
+                        <strong>Exemplo:</strong><br>
+                        <code style="background: white; padding: 10px; display: block; margin-top: 8px; border-radius: 4px; border: 1px solid #ddd;">
+&lt;application<br>
+&nbsp;&nbsp;android:extractNativeLibs="true"<br>
+&nbsp;&nbsp;...&gt;
+                        </code>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #333; margin-bottom: 10px;">2. Permissões de Internet</h4>
+                    <p style="color: #666; font-size: 0.95em;">
+                        <strong>Tag:</strong> &lt;uses-permission name="android.permission.INTERNET" /&gt;<br>
+                        <strong>Localização:</strong> Fora da tag &lt;application&gt;<br>
+                        <strong>Propósito:</strong> Necessária para integração Clover Intercom<br>
+                        <strong>Exemplo:</strong><br>
+                        <code style="background: white; padding: 10px; display: block; margin-top: 8px; border-radius: 4px; border: 1px solid #ddd;">
+&lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+                        </code>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #333; margin-bottom: 10px;">3. Versão Mínima do SDK</h4>
+                    <p style="color: #666; font-size: 0.95em;">
+                        <strong>Atributo:</strong> android:minSdkVersion<br>
+                        <strong>Versão Mínima Recomendada:</strong> 21 (Android 5.0)<br>
+                        <strong>Localização:</strong> &lt;uses-sdk&gt; tag<br>
+                        <strong>Exemplo:</strong><br>
+                        <code style="background: white; padding: 10px; display: block; margin-top: 8px; border-radius: 4px; border: 1px solid #ddd;">
+&lt;uses-sdk<br>
+&nbsp;&nbsp;android:minSdkVersion="21"<br>
+&nbsp;&nbsp;android:targetSdkVersion="34" /&gt;
+                        </code>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #333; margin-bottom: 10px;">4. Intent Filters (se aplicável)</h4>
+                    <p style="color: #666; font-size: 0.95em;">
+                        <strong>Quando usar:</strong> Para activities que recebem intents do Intercom<br>
+                        <strong>Localização:</strong> Dentro de &lt;activity&gt;<br>
+                        <strong>Exemplo:</strong><br>
+                        <code style="background: white; padding: 10px; display: block; margin-top: 8px; border-radius: 4px; border: 1px solid #ddd;">
+&lt;intent-filter&gt;<br>
+&nbsp;&nbsp;&lt;action android:name="android.intent.action.MAIN" /&gt;<br>
+&nbsp;&nbsp;&lt;category android:name="android.intent.category.LAUNCHER" /&gt;<br>
+&lt;/intent-filter&gt;
+                        </code>
+                    </p>
+                </div>
+
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                    <p style="color: #856404; margin: 0;">
+                        <strong>⚠️ Dica Importante:</strong> O parâmetro android:extractNativeLibs="true" é crítico se seu app mistura dependências nativas. Sem isso, a instalação pode falhar em certos terminais/devices.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: APIS -->
+        <div id="apis" class="tab-content">
+            <h2>Consultar APIs de Pagamento</h2>
+            <p style="color: #666; margin-bottom: 20px;">Veja as APIs específicas para cada tipo de pagamento!</p>
+            
+            <div class="form-group">
+                <label>Tipo de Pagamento</label>
+                <select id="api-tipo">
+                    <option value="debito">Débito</option>
+                    <option value="credito">Crédito</option>
+                    <option value="pix">PIX</option>
+                    <option value="todas">Todas</option>
+                </select>
+            </div>
+
+            <button class="btn-test" onclick="testarApis()">Consultar API</button>
+            <div id="api-result"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Integração DevRel Clover | Testador Interativo</p>
+        <p>API: https://mcp-devrel-clover.onrender.com</p>
+    </div>
+
+    <script>
+        const API_URL = 'https://mcp-devrel-clover.onrender.com';
+
+        function switchTab(tabName) {
+            // Remove active de todos os tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Ativa tab selecionada
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function showResult(elementId, isLoading = false) {
+            const element = document.getElementById(elementId);
+            if (!element.querySelector('.result')) {
+                const result = document.createElement('div');
+                result.className = 'result';
+                element.appendChild(result);
+            }
+            return element.querySelector('.result');
+        }
+
+        async function callApi(toolName, args, resultElementId) {
+            const resultDiv = showResult(resultElementId);
+            resultDiv.innerHTML = '<div class="loading">Carregando...</div>';
+
+            try {
+                const response = await fetch(`${API_URL}/call/${toolName}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        toolName: toolName,
+                        args: args
+                    })
+                });
+
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <h3>Resultado</h3>
+                    <div class="result-content success">${JSON.stringify(data, null, 2)}</div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h3>Erro</h3>
+                    <div class="result-content error">${error.message}</div>
+                `;
+            }
+        }
+
+        // Validador de AndroidManifest
+        async function validarManifest() {
+            const resultDiv = showResult('validador-apk-result');
+            
+            let xmlContent = document.getElementById('manifest-content').value;
+            
+            // Se arquivo foi selecionado, lê o conteúdo
+            const fileInput = document.getElementById('manifest-file');
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                xmlContent = await file.text();
+            }
+
+            if (!xmlContent.trim()) {
+                resultDiv.innerHTML = `
+                    <h3>Erro</h3>
+                    <div class="result-content error">Por favor, faça upload ou cole o conteúdo do AndroidManifest.xml</div>
+                `;
+                return;
+            }
+
+            // Validação dos parâmetros
+            const validacoes = {
+                'extractNativeLibs': {
+                    regex: /android:extractNativeLibs\s*=\s*["']true["']/i,
+                    nome: 'android:extractNativeLibs="true"',
+                    critico: true,
+                    descricao: 'Necessário para apps com dependências nativas'
+                },
+                'internet': {
+                    regex: /android\.permission\.INTERNET/i,
+                    nome: 'Permissão INTERNET',
+                    critico: true,
+                    descricao: 'Necessária para comunicação com Intercom'
+                },
+                'minSdk': {
+                    regex: /android:minSdkVersion\s*=\s*["']([0-9]+)["']/i,
+                    nome: 'minSdkVersion configurado',
+                    critico: true,
+                    descricao: 'Versão mínima recomendada: 21'
+                },
+                'targetSdk': {
+                    regex: /android:targetSdkVersion\s*=\s*["']([0-9]+)["']/i,
+                    nome: 'targetSdkVersion configurado',
+                    critico: false,
+                    descricao: 'Versão alvo recomendada: 34+'
+                },
+                'package': {
+                    regex: /manifest\s+[^>]*package\s*=\s*["']([^"']+)["']/i,
+                    nome: 'Package name definido',
+                    critico: true,
+                    descricao: 'Identificador único da aplicação'
+                }
+            };
+
+            let resultadoHtml = '<h3>Resultado da Validação</h3>';
+            let criticosFalharam = 0;
+            let avisosFalharam = 0;
+
+            resultadoHtml += '<div style="margin-top: 15px;">';
+
+            for (const [chave, validacao] of Object.entries(validacoes)) {
+                const passou = validacao.regex.test(xmlContent);
+                const icon = passou ? '✓' : '✗';
+                const cor = passou ? '#228800' : '#dc2626';
+                const fundo = passou ? '#f0fdf4' : '#fef2f2';
+                
+                if (!passou && validacao.critico) criticosFalharam++;
+                if (!passou && !validacao.critico) avisosFalharam++;
+
+                resultadoHtml += `
+                    <div style="background: ${fundo}; padding: 12px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid ${cor}; color: ${cor};">
+                        <strong>${icon} ${validacao.nome}</strong><br>
+                        <span style="font-size: 0.9em; color: #666;">${validacao.descricao}</span>
+                    </div>
+                `;
+            }
+
+            resultadoHtml += '</div>';
+
+            // Resumo
+            let statusGeral = 'APROVADO';
+            let corStatus = '#228800';
+            let bgStatus = '#f0fdf4';
+
+            if (criticosFalharam > 0) {
+                statusGeral = 'REPROVADO - Corrigir parâmetros críticos';
+                corStatus = '#dc2626';
+                bgStatus = '#fef2f2';
+            } else if (avisosFalharam > 0) {
+                statusGeral = 'APROVADO COM AVISOS';
+                corStatus = '#ffc107';
+                bgStatus = '#fffbf0';
+            }
+
+            resultadoHtml += `
+                <div style="margin-top: 20px; background: ${bgStatus}; padding: 15px; border-radius: 8px; border-left: 4px solid ${corStatus}; color: ${corStatus};">
+                    <strong style="font-size: 1.1em;">Status: ${statusGeral}</strong><br>
+                    <span style="font-size: 0.9em;">
+                        Parâmetros críticos: ${5 - criticosFalharam}/5 ✓
+                    </span>
+                </div>
+            `;
+
+            resultDiv.innerHTML = resultadoHtml;
+        }
+
+        // Gerar Código
+        async function testarCodigo() {
+            const linguagem = document.getElementById('codigo-linguagem').value;
+            const tipo = document.getElementById('codigo-tipo').value;
+            
+            await callApi('gerar_exemplo_codigo', {
+                linguagem: linguagem,
+                tipo_pagamento: tipo
+            }, 'codigo-result');
+        }
+
+        // Documentação
+        async function testarDocs() {
+            const topico = document.getElementById('docs-topico').value;
+            
+            await callApi('consultar_documentacao', {
+                topico: topico
+            }, 'docs-result');
+        }
+
+        // Validar
+        async function testarValidar() {
+            const nome = document.getElementById('validar-nome').value;
+            const linguagem = document.getElementById('validar-linguagem').value;
+            const recursosStr = document.getElementById('validar-recursos').value;
+            const recursos = recursosStr.split(',').map(r => r.trim());
+            
+            await callApi('validar_requisitos_app', {
+                nome_app: nome,
+                linguagem: linguagem,
+                recursos: recursos
+            }, 'validar-result');
+        }
+
+        // Troubleshooting
+        async function testarTroubleshooting() {
+            const problema = document.getElementById('ts-problema').value;
+            const linguagem = document.getElementById('ts-linguagem').value || undefined;
+            const erro = document.getElementById('ts-erro').value || undefined;
+            
+            await callApi('troubleshooting', {
+                problema: problema,
+                ...(linguagem && { linguagem }),
+                ...(erro && { mensagem_erro: erro })
+            }, 'ts-result');
+        }
+
+        // APIs
+        async function testarApis() {
+            const tipo = document.getElementById('api-tipo').value;
+            
+            await callApi('consultar_apis_pagamento', {
+                tipo: tipo
+            }, 'api-result');
+        }
+    </script>
+</body>
+</html>
