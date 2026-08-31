@@ -219,22 +219,21 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 MCP DevRel Clover</h1>
+            <h1>MCP DevRel Clover</h1>
             <p>Testador Interativo de Ferramentas</p>
         </div>
 
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('codigo')">💻 Gerar Código</button>
-            <button class="tab-btn" onclick="switchTab('docs')">📚 Documentação</button>
-            <button class="tab-btn" onclick="switchTab('validar')">✅ Validar App</button>
-            <button class="tab-btn" onclick="switchTab('troubleshooting')">🔧 Troubleshooting</button>
-            <button class="tab-btn" onclick="switchTab('marketplace')">🛍️ Marketplace</button>
-            <button class="tab-btn" onclick="switchTab('apis')">📱 APIs</button>
+            <button class="tab-btn active" onclick="switchTab('codigo')">Gerar Código</button>
+            <button class="tab-btn" onclick="switchTab('docs')">Documentação</button>
+            <button class="tab-btn" onclick="switchTab('validar')">Validar App</button>
+            <button class="tab-btn" onclick="switchTab('troubleshooting')">Troubleshooting</button>
+            <button class="tab-btn" onclick="switchTab('apis')">APIs</button>
         </div>
 
         <!-- TAB 1: GERAR CÓDIGO -->
         <div id="codigo" class="tab-content active">
-            <h2>💻 Gerar Código para Integração</h2>
+            <h2>Gerar Código para Integração</h2>
             <p style="color: #666; margin-bottom: 20px;">Selecione a linguagem e tipo de pagamento para gerar código pronto para copiar!</p>
             
             <div class="two-columns">
@@ -259,13 +258,13 @@
                 </div>
             </div>
 
-            <button class="btn-test" onclick="testarCodigo()">🎯 Gerar Código</button>
+            <button class="btn-test" onclick="testarCodigo()">Gerar Código</button>
             <div id="codigo-result"></div>
         </div>
 
         <!-- TAB 2: DOCUMENTAÇÃO -->
         <div id="docs" class="tab-content">
-            <h2>📚 Consultar Documentação</h2>
+            <h2>Consultar Documentação</h2>
             <p style="color: #666; margin-bottom: 20px;">Escolha um tópico para ver a documentação específica!</p>
             
             <div class="form-group">
@@ -279,13 +278,13 @@
                 </select>
             </div>
 
-            <button class="btn-test" onclick="testarDocs()">📖 Consultar Documentação</button>
+            <button class="btn-test" onclick="testarDocs()">Consultar Documentação</button>
             <div id="docs-result"></div>
         </div>
 
         <!-- TAB 3: VALIDAR APP -->
         <div id="validar" class="tab-content">
-            <h2>✅ Validar Requisitos do App</h2>
+            <h2>Validar Requisitos do App</h2>
             <p style="color: #666; margin-bottom: 20px;">Verifique se seu app atende os requisitos da Clover!</p>
             
             <div class="form-group">
@@ -310,13 +309,13 @@
                 <div class="form-description">Exemplos: pagamento, impressora, nfc</div>
             </div>
 
-            <button class="btn-test" onclick="testarValidar()">🔍 Validar Requisitos</button>
+            <button class="btn-test" onclick="testarValidar()">Validar Requisitos</button>
             <div id="validar-result"></div>
         </div>
 
         <!-- TAB 4: TROUBLESHOOTING -->
         <div id="troubleshooting" class="tab-content">
-            <h2>🔧 Troubleshooting & Ajuda</h2>
+            <h2>Troubleshooting & Ajuda</h2>
             <p style="color: #666; margin-bottom: 20px;">Descreva o problema e receba soluções!</p>
             
             <div class="form-group">
@@ -334,42 +333,13 @@
                 <input type="text" id="ts-erro" placeholder="Cole a mensagem de erro aqui">
             </div>
 
-            <button class="btn-test" onclick="testarTroubleshooting()">🚀 Procurar Solução</button>
+            <button class="btn-test" onclick="testarTroubleshooting()">Procurar Solução</button>
             <div id="ts-result"></div>
         </div>
 
-        <!-- TAB 5: MARKETPLACE -->
-        <div id="marketplace" class="tab-content">
-            <h2>🛍️ Publicar no Marketplace</h2>
-            <p style="color: #666; margin-bottom: 20px;">Veja o passo-a-passo para publicar seu app!</p>
-            
-            <div class="form-group">
-                <label>Nome do App</label>
-                <input type="text" id="mp-nome" placeholder="Ex: MyPaymentApp" value="MyPaymentApp">
-            </div>
-
-            <div class="form-group">
-                <label>Descrição</label>
-                <input type="text" id="mp-desc" placeholder="Descrição breve do app" value="App de Pagamento">
-            </div>
-
-            <div class="form-group">
-                <label>Categoria</label>
-                <select id="mp-categoria">
-                    <option value="pagamento">Pagamento</option>
-                    <option value="vendas">Vendas</option>
-                    <option value="relatorios">Relatórios</option>
-                    <option value="outro">Outro</option>
-                </select>
-            </div>
-
-            <button class="btn-test" onclick="testarMarketplace()">📝 Ver Passo-a-Passo</button>
-            <div id="mp-result"></div>
-        </div>
-
-        <!-- TAB 6: APIS -->
+        <!-- TAB 5: APIS -->
         <div id="apis" class="tab-content">
-            <h2>📱 Consultar APIs de Pagamento</h2>
+            <h2>Consultar APIs de Pagamento</h2>
             <p style="color: #666; margin-bottom: 20px;">Veja as APIs específicas para cada tipo de pagamento!</p>
             
             <div class="form-group">
@@ -382,13 +352,13 @@
                 </select>
             </div>
 
-            <button class="btn-test" onclick="testarApis()">🔌 Consultar API</button>
+            <button class="btn-test" onclick="testarApis()">Consultar API</button>
             <div id="api-result"></div>
         </div>
     </div>
 
     <div class="footer">
-        <p>🚀 MCP DevRel Clover | Testador Interativo</p>
+        <p>MCP DevRel Clover | Testador Interativo</p>
         <p>API: https://mcp-devrel-clover.onrender.com</p>
     </div>
 
@@ -421,7 +391,7 @@
 
         async function callApi(toolName, args, resultElementId) {
             const resultDiv = showResult(resultElementId);
-            resultDiv.innerHTML = '<div class="loading">⏳ Carregando...</div>';
+            resultDiv.innerHTML = '<div class="loading">Carregando...</div>';
 
             try {
                 const response = await fetch(`${API_URL}/call/${toolName}`, {
@@ -437,12 +407,12 @@
 
                 const data = await response.json();
                 resultDiv.innerHTML = `
-                    <h3>✅ Resultado</h3>
+                    <h3>Resultado</h3>
                     <div class="result-content success">${JSON.stringify(data, null, 2)}</div>
                 `;
             } catch (error) {
                 resultDiv.innerHTML = `
-                    <h3>❌ Erro</h3>
+                    <h3>Erro</h3>
                     <div class="result-content error">${error.message}</div>
                 `;
             }
@@ -493,19 +463,6 @@
                 ...(linguagem && { linguagem }),
                 ...(erro && { mensagem_erro: erro })
             }, 'ts-result');
-        }
-
-        // Marketplace
-        async function testarMarketplace() {
-            const nome = document.getElementById('mp-nome').value;
-            const desc = document.getElementById('mp-desc').value;
-            const categoria = document.getElementById('mp-categoria').value;
-            
-            await callApi('registrar_app_marketplace', {
-                nome_app: nome,
-                descricao: desc,
-                categoria: categoria
-            }, 'mp-result');
         }
 
         // APIs
