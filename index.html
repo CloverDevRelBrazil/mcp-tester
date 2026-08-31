@@ -100,7 +100,8 @@
         }
 
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
@@ -110,7 +111,8 @@
         }
 
         .form-group input:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: #228800;
         }
@@ -229,7 +231,7 @@
             <button class="tab-btn active" onclick="switchTab('codigo')">Gerar Código</button>
             <button class="tab-btn" onclick="switchTab('docs')">Documentação</button>
             <button class="tab-btn" onclick="switchTab('validar')">Validar App</button>
-            <button class="tab-btn" onclick="switchTab('troubleshooting')">Troubleshooting</button>
+            <button class="tab-btn" onclick="switchTab('validador-apk')">Validador de APK</button>
             <button class="tab-btn" onclick="switchTab('apis')">APIs</button>
         </div>
 
@@ -339,7 +341,96 @@
             <div id="ts-result"></div>
         </div>
 
-        <!-- TAB 5: APIS -->
+        <!-- TAB 5: VALIDADOR DE APK -->
+        <div id="validador-apk" class="tab-content">
+            <h2>Validador de APK & AndroidManifest</h2>
+            <p style="color: #666; margin-bottom: 20px;">Faça upload do seu AndroidManifest.xml ou extraia da APK para validar os parâmetros obrigatórios.</p>
+            
+            <div class="form-group">
+                <label>Upload do AndroidManifest.xml</label>
+                <input type="file" id="manifest-file" accept=".xml" style="padding: 15px; cursor: pointer;">
+                <div class="form-description">Ou cole o conteúdo XML abaixo</div>
+            </div>
+
+            <div class="form-group">
+                <label>Conteúdo do AndroidManifest.xml (opcional)</label>
+                <textarea id="manifest-content" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.85em; min-height: 200px;" placeholder="Cole aqui o conteúdo do AndroidManifest.xml..."></textarea>
+            </div>
+
+            <button class="btn-test" onclick="validarManifest()">Validar AndroidManifest</button>
+            <div id="validador-apk-result"></div>
+
+            <!-- Guia de Parâmetros -->
+            <div style="margin-top: 40px; background: #f0f8f0; padding: 20px; border-radius: 12px; border-left: 4px solid #228800;">
+                <h3 style="color: #228800; margin-bottom: 20px;">Guia Prático - Parâmetros Obrigatórios</h3>
+                
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #333; margin-bottom: 10px;">1. android:extractNativeLibs="true"</h4>
+                    <p style="color: #666; font-size: 0.95em;">
+                        <strong>Localização:</strong> &lt;application&gt; tag<br>
+                        <strong>Propósito:</strong> Extrai bibliotecas nativas (.so) durante instalação<br>
+                        <strong>Importância:</strong> Crítico para apps com Android NDK/C++<br>
+                        <strong>Exemplo:</strong><br>
+                        <code style="background: white; padding: 10px; display: block; margin-top: 8px; border-radius: 4px; border: 1px solid #ddd;">
+&lt;application<br>
+&nbsp;&nbsp;android:extractNativeLibs="true"<br>
+&nbsp;&nbsp;...&gt;
+                        </code>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #333; margin-bottom: 10px;">2. Permissões de Internet</h4>
+                    <p style="color: #666; font-size: 0.95em;">
+                        <strong>Tag:</strong> &lt;uses-permission name="android.permission.INTERNET" /&gt;<br>
+                        <strong>Localização:</strong> Fora da tag &lt;application&gt;<br>
+                        <strong>Propósito:</strong> Necessária para integração Clover Intercom<br>
+                        <strong>Exemplo:</strong><br>
+                        <code style="background: white; padding: 10px; display: block; margin-top: 8px; border-radius: 4px; border: 1px solid #ddd;">
+&lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+                        </code>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #333; margin-bottom: 10px;">3. Versão Mínima do SDK</h4>
+                    <p style="color: #666; font-size: 0.95em;">
+                        <strong>Atributo:</strong> android:minSdkVersion<br>
+                        <strong>Versão Mínima Recomendada:</strong> 21 (Android 5.0)<br>
+                        <strong>Localização:</strong> &lt;uses-sdk&gt; tag<br>
+                        <strong>Exemplo:</strong><br>
+                        <code style="background: white; padding: 10px; display: block; margin-top: 8px; border-radius: 4px; border: 1px solid #ddd;">
+&lt;uses-sdk<br>
+&nbsp;&nbsp;android:minSdkVersion="21"<br>
+&nbsp;&nbsp;android:targetSdkVersion="34" /&gt;
+                        </code>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #333; margin-bottom: 10px;">4. Intent Filters (se aplicável)</h4>
+                    <p style="color: #666; font-size: 0.95em;">
+                        <strong>Quando usar:</strong> Para activities que recebem intents do Intercom<br>
+                        <strong>Localização:</strong> Dentro de &lt;activity&gt;<br>
+                        <strong>Exemplo:</strong><br>
+                        <code style="background: white; padding: 10px; display: block; margin-top: 8px; border-radius: 4px; border: 1px solid #ddd;">
+&lt;intent-filter&gt;<br>
+&nbsp;&nbsp;&lt;action android:name="android.intent.action.MAIN" /&gt;<br>
+&nbsp;&nbsp;&lt;category android:name="android.intent.category.LAUNCHER" /&gt;<br>
+&lt;/intent-filter&gt;
+                        </code>
+                    </p>
+                </div>
+
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                    <p style="color: #856404; margin: 0;">
+                        <strong>⚠️ Dica Importante:</strong> O parâmetro android:extractNativeLibs="true" é crítico se seu app mistura dependências nativas. Sem isso, a instalação pode falhar em certos terminais/devices.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: APIS -->
         <div id="apis" class="tab-content">
             <h2>Consultar APIs de Pagamento</h2>
             <p style="color: #666; margin-bottom: 20px;">Veja as APIs específicas para cada tipo de pagamento!</p>
@@ -418,6 +509,113 @@
                     <div class="result-content error">${error.message}</div>
                 `;
             }
+        }
+
+        // Validador de AndroidManifest
+        async function validarManifest() {
+            const resultDiv = showResult('validador-apk-result');
+            
+            let xmlContent = document.getElementById('manifest-content').value;
+            
+            // Se arquivo foi selecionado, lê o conteúdo
+            const fileInput = document.getElementById('manifest-file');
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                xmlContent = await file.text();
+            }
+
+            if (!xmlContent.trim()) {
+                resultDiv.innerHTML = `
+                    <h3>Erro</h3>
+                    <div class="result-content error">Por favor, faça upload ou cole o conteúdo do AndroidManifest.xml</div>
+                `;
+                return;
+            }
+
+            // Validação dos parâmetros
+            const validacoes = {
+                'extractNativeLibs': {
+                    regex: /android:extractNativeLibs\s*=\s*["']true["']/i,
+                    nome: 'android:extractNativeLibs="true"',
+                    critico: true,
+                    descricao: 'Necessário para apps com dependências nativas'
+                },
+                'internet': {
+                    regex: /android\.permission\.INTERNET/i,
+                    nome: 'Permissão INTERNET',
+                    critico: true,
+                    descricao: 'Necessária para comunicação com Intercom'
+                },
+                'minSdk': {
+                    regex: /android:minSdkVersion\s*=\s*["']([0-9]+)["']/i,
+                    nome: 'minSdkVersion configurado',
+                    critico: true,
+                    descricao: 'Versão mínima recomendada: 21'
+                },
+                'targetSdk': {
+                    regex: /android:targetSdkVersion\s*=\s*["']([0-9]+)["']/i,
+                    nome: 'targetSdkVersion configurado',
+                    critico: false,
+                    descricao: 'Versão alvo recomendada: 34+'
+                },
+                'package': {
+                    regex: /manifest\s+[^>]*package\s*=\s*["']([^"']+)["']/i,
+                    nome: 'Package name definido',
+                    critico: true,
+                    descricao: 'Identificador único da aplicação'
+                }
+            };
+
+            let resultadoHtml = '<h3>Resultado da Validação</h3>';
+            let criticosFalharam = 0;
+            let avisosFalharam = 0;
+
+            resultadoHtml += '<div style="margin-top: 15px;">';
+
+            for (const [chave, validacao] of Object.entries(validacoes)) {
+                const passou = validacao.regex.test(xmlContent);
+                const icon = passou ? '✓' : '✗';
+                const cor = passou ? '#228800' : '#dc2626';
+                const fundo = passou ? '#f0fdf4' : '#fef2f2';
+                
+                if (!passou && validacao.critico) criticosFalharam++;
+                if (!passou && !validacao.critico) avisosFalharam++;
+
+                resultadoHtml += `
+                    <div style="background: ${fundo}; padding: 12px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid ${cor}; color: ${cor};">
+                        <strong>${icon} ${validacao.nome}</strong><br>
+                        <span style="font-size: 0.9em; color: #666;">${validacao.descricao}</span>
+                    </div>
+                `;
+            }
+
+            resultadoHtml += '</div>';
+
+            // Resumo
+            let statusGeral = 'APROVADO';
+            let corStatus = '#228800';
+            let bgStatus = '#f0fdf4';
+
+            if (criticosFalharam > 0) {
+                statusGeral = 'REPROVADO - Corrigir parâmetros críticos';
+                corStatus = '#dc2626';
+                bgStatus = '#fef2f2';
+            } else if (avisosFalharam > 0) {
+                statusGeral = 'APROVADO COM AVISOS';
+                corStatus = '#ffc107';
+                bgStatus = '#fffbf0';
+            }
+
+            resultadoHtml += `
+                <div style="margin-top: 20px; background: ${bgStatus}; padding: 15px; border-radius: 8px; border-left: 4px solid ${corStatus}; color: ${corStatus};">
+                    <strong style="font-size: 1.1em;">Status: ${statusGeral}</strong><br>
+                    <span style="font-size: 0.9em;">
+                        Parâmetros críticos: ${5 - criticosFalharam}/5 ✓
+                    </span>
+                </div>
+            `;
+
+            resultDiv.innerHTML = resultadoHtml;
         }
 
         // Gerar Código
