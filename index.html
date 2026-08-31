@@ -3,35 +3,519 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCP Tester - Clover DevRel Brazil</title>
+    <title>MCP DevRel Clover - Testador Interativo</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1ec17c 0%, #16a34a 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
         .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 1000px;
+            margin: 0 auto;
         }
-        h1 { color: #333; }
-        p { color: #666; font-size: 18px; }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #1ec17c;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #666;
+        }
+
+        .tab-btn.active {
+            background: #1ec17c;
+            color: white;
+            border-color: #16a34a;
+        }
+
+        .tab-btn:hover {
+            border-color: #1ec17c;
+        }
+
+        .tab-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1ec17c;
+        }
+
+        .form-description {
+            color: #999;
+            font-size: 0.85em;
+            margin-top: 4px;
+        }
+
+        .btn-test {
+            background: #1ec17c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn-test:hover {
+            background: #16a34a;
+        }
+
+        .btn-test:active {
+            transform: scale(0.98);
+        }
+
+        .result {
+            margin-top: 30px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #1ec17c;
+        }
+
+        .result h3 {
+            color: #1ec17c;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .result-content {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .loading {
+            text-align: center;
+            color: #1ec17c;
+            font-weight: 600;
+            padding: 20px;
+        }
+
+        .error {
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #dc2626;
+        }
+
+        .success {
+            color: #16a34a;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 1.6em;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab-btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🚀 MCP Tester</h1>
-        <p>Testador MCP para Clover Intercom</p>
-        <p style="font-size: 14px; color: #999; margin-top: 20px;">
-            CloverDevRelBrazil
-        </p>
+        <div class="header">
+            <h1>🚀 MCP DevRel Clover</h1>
+            <p>Testador Interativo de Ferramentas</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('codigo')">💻 Gerar Código</button>
+            <button class="tab-btn" onclick="switchTab('docs')">📚 Documentação</button>
+            <button class="tab-btn" onclick="switchTab('validar')">✅ Validar App</button>
+            <button class="tab-btn" onclick="switchTab('troubleshooting')">🔧 Troubleshooting</button>
+            <button class="tab-btn" onclick="switchTab('marketplace')">🛍️ Marketplace</button>
+            <button class="tab-btn" onclick="switchTab('apis')">📱 APIs</button>
+        </div>
+
+        <!-- TAB 1: GERAR CÓDIGO -->
+        <div id="codigo" class="tab-content active">
+            <h2>💻 Gerar Código para Integração</h2>
+            <p style="color: #666; margin-bottom: 20px;">Selecione a linguagem e tipo de pagamento para gerar código pronto para copiar!</p>
+            
+            <div class="two-columns">
+                <div class="form-group">
+                    <label>Linguagem</label>
+                    <select id="codigo-linguagem">
+                        <option value="kotlin">Android/Kotlin</option>
+                        <option value="flutter">Flutter</option>
+                        <option value="react-native">React Native</option>
+                        <option value="swift">iOS/Swift</option>
+                        <option value="typescript">TypeScript/Node.js</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de Pagamento</label>
+                    <select id="codigo-tipo">
+                        <option value="debito">Débito</option>
+                        <option value="credito">Crédito</option>
+                        <option value="pix">PIX</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-test" onclick="testarCodigo()">🎯 Gerar Código</button>
+            <div id="codigo-result"></div>
+        </div>
+
+        <!-- TAB 2: DOCUMENTAÇÃO -->
+        <div id="docs" class="tab-content">
+            <h2>📚 Consultar Documentação</h2>
+            <p style="color: #666; margin-bottom: 20px;">Escolha um tópico para ver a documentação específica!</p>
+            
+            <div class="form-group">
+                <label>Tópico</label>
+                <select id="docs-topico">
+                    <option value="impressoras">Impressoras</option>
+                    <option value="sdk">SDK Setup</option>
+                    <option value="certificados">Certificados & Assinatura</option>
+                    <option value="pagamento">Integração de Pagamento</option>
+                    <option value="debug">Troubleshooting & Debug</option>
+                </select>
+            </div>
+
+            <button class="btn-test" onclick="testarDocs()">📖 Consultar Documentação</button>
+            <div id="docs-result"></div>
+        </div>
+
+        <!-- TAB 3: VALIDAR APP -->
+        <div id="validar" class="tab-content">
+            <h2>✅ Validar Requisitos do App</h2>
+            <p style="color: #666; margin-bottom: 20px;">Verifique se seu app atende os requisitos da Clover!</p>
+            
+            <div class="form-group">
+                <label>Nome do App</label>
+                <input type="text" id="validar-nome" placeholder="Ex: MyPaymentApp" value="MyPaymentApp">
+            </div>
+
+            <div class="form-group">
+                <label>Linguagem</label>
+                <select id="validar-linguagem">
+                    <option value="kotlin">Android/Kotlin</option>
+                    <option value="flutter">Flutter</option>
+                    <option value="react-native">React Native</option>
+                    <option value="swift">iOS/Swift</option>
+                    <option value="typescript">TypeScript/Node.js</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Recursos (separados por vírgula)</label>
+                <input type="text" id="validar-recursos" placeholder="Ex: pagamento, impressora" value="pagamento">
+                <div class="form-description">Exemplos: pagamento, impressora, nfc</div>
+            </div>
+
+            <button class="btn-test" onclick="testarValidar()">🔍 Validar Requisitos</button>
+            <div id="validar-result"></div>
+        </div>
+
+        <!-- TAB 4: TROUBLESHOOTING -->
+        <div id="troubleshooting" class="tab-content">
+            <h2>🔧 Troubleshooting & Ajuda</h2>
+            <p style="color: #666; margin-bottom: 20px;">Descreva o problema e receba soluções!</p>
+            
+            <div class="form-group">
+                <label>Descrição do Problema</label>
+                <input type="text" id="ts-problema" placeholder="Ex: terminal não reconhecido" value="terminal não reconhecido">
+            </div>
+
+            <div class="form-group">
+                <label>Linguagem (opcional)</label>
+                <input type="text" id="ts-linguagem" placeholder="Ex: kotlin">
+            </div>
+
+            <div class="form-group">
+                <label>Mensagem de Erro (opcional)</label>
+                <input type="text" id="ts-erro" placeholder="Cole a mensagem de erro aqui">
+            </div>
+
+            <button class="btn-test" onclick="testarTroubleshooting()">🚀 Procurar Solução</button>
+            <div id="ts-result"></div>
+        </div>
+
+        <!-- TAB 5: MARKETPLACE -->
+        <div id="marketplace" class="tab-content">
+            <h2>🛍️ Publicar no Marketplace</h2>
+            <p style="color: #666; margin-bottom: 20px;">Veja o passo-a-passo para publicar seu app!</p>
+            
+            <div class="form-group">
+                <label>Nome do App</label>
+                <input type="text" id="mp-nome" placeholder="Ex: MyPaymentApp" value="MyPaymentApp">
+            </div>
+
+            <div class="form-group">
+                <label>Descrição</label>
+                <input type="text" id="mp-desc" placeholder="Descrição breve do app" value="App de Pagamento">
+            </div>
+
+            <div class="form-group">
+                <label>Categoria</label>
+                <select id="mp-categoria">
+                    <option value="pagamento">Pagamento</option>
+                    <option value="vendas">Vendas</option>
+                    <option value="relatorios">Relatórios</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+
+            <button class="btn-test" onclick="testarMarketplace()">📝 Ver Passo-a-Passo</button>
+            <div id="mp-result"></div>
+        </div>
+
+        <!-- TAB 6: APIS -->
+        <div id="apis" class="tab-content">
+            <h2>📱 Consultar APIs de Pagamento</h2>
+            <p style="color: #666; margin-bottom: 20px;">Veja as APIs específicas para cada tipo de pagamento!</p>
+            
+            <div class="form-group">
+                <label>Tipo de Pagamento</label>
+                <select id="api-tipo">
+                    <option value="debito">Débito</option>
+                    <option value="credito">Crédito</option>
+                    <option value="pix">PIX</option>
+                    <option value="todas">Todas</option>
+                </select>
+            </div>
+
+            <button class="btn-test" onclick="testarApis()">🔌 Consultar API</button>
+            <div id="api-result"></div>
+        </div>
     </div>
+
+    <div class="footer">
+        <p>🚀 MCP DevRel Clover | Testador Interativo</p>
+        <p>API: https://mcp-devrel-clover.onrender.com</p>
+    </div>
+
+    <script>
+        const API_URL = 'https://mcp-devrel-clover.onrender.com';
+
+        function switchTab(tabName) {
+            // Remove active de todos os tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Ativa tab selecionada
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function showResult(elementId, isLoading = false) {
+            const element = document.getElementById(elementId);
+            if (!element.querySelector('.result')) {
+                const result = document.createElement('div');
+                result.className = 'result';
+                element.appendChild(result);
+            }
+            return element.querySelector('.result');
+        }
+
+        async function callApi(toolName, args, resultElementId) {
+            const resultDiv = showResult(resultElementId);
+            resultDiv.innerHTML = '<div class="loading">⏳ Carregando...</div>';
+
+            try {
+                const response = await fetch(`${API_URL}/call/${toolName}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        toolName: toolName,
+                        args: args
+                    })
+                });
+
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <h3>✅ Resultado</h3>
+                    <div class="result-content success">${JSON.stringify(data, null, 2)}</div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h3>❌ Erro</h3>
+                    <div class="result-content error">${error.message}</div>
+                `;
+            }
+        }
+
+        // Gerar Código
+        async function testarCodigo() {
+            const linguagem = document.getElementById('codigo-linguagem').value;
+            const tipo = document.getElementById('codigo-tipo').value;
+            
+            await callApi('gerar_exemplo_codigo', {
+                linguagem: linguagem,
+                tipo_pagamento: tipo
+            }, 'codigo-result');
+        }
+
+        // Documentação
+        async function testarDocs() {
+            const topico = document.getElementById('docs-topico').value;
+            
+            await callApi('consultar_documentacao', {
+                topico: topico
+            }, 'docs-result');
+        }
+
+        // Validar
+        async function testarValidar() {
+            const nome = document.getElementById('validar-nome').value;
+            const linguagem = document.getElementById('validar-linguagem').value;
+            const recursosStr = document.getElementById('validar-recursos').value;
+            const recursos = recursosStr.split(',').map(r => r.trim());
+            
+            await callApi('validar_requisitos_app', {
+                nome_app: nome,
+                linguagem: linguagem,
+                recursos: recursos
+            }, 'validar-result');
+        }
+
+        // Troubleshooting
+        async function testarTroubleshooting() {
+            const problema = document.getElementById('ts-problema').value;
+            const linguagem = document.getElementById('ts-linguagem').value || undefined;
+            const erro = document.getElementById('ts-erro').value || undefined;
+            
+            await callApi('troubleshooting', {
+                problema: problema,
+                ...(linguagem && { linguagem }),
+                ...(erro && { mensagem_erro: erro })
+            }, 'ts-result');
+        }
+
+        // Marketplace
+        async function testarMarketplace() {
+            const nome = document.getElementById('mp-nome').value;
+            const desc = document.getElementById('mp-desc').value;
+            const categoria = document.getElementById('mp-categoria').value;
+            
+            await callApi('registrar_app_marketplace', {
+                nome_app: nome,
+                descricao: desc,
+                categoria: categoria
+            }, 'mp-result');
+        }
+
+        // APIs
+        async function testarApis() {
+            const tipo = document.getElementById('api-tipo').value;
+            
+            await callApi('consultar_apis_pagamento', {
+                tipo: tipo
+            }, 'api-result');
+        }
+    </script>
 </body>
 </html>
